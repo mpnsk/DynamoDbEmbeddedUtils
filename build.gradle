@@ -1,0 +1,35 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group 'com.github.mpnsk'
+version '1.0-SNAPSHOT'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://s3.eu-central-1.amazonaws.com/dynamodb-local-frankfurt/release" }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.+')
+    implementation platform('software.amazon.awssdk:bom:2.+')
+
+    implementation 'com.amazonaws:aws-java-sdk-dynamodb'
+    implementation 'software.amazon.awssdk:dynamodb'
+
+    compile 'com.amazonaws:DynamoDBLocal:[1.11,2.0)'
+}
